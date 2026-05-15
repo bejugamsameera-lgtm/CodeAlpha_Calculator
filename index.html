@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precision Calc | Minimalist Design</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body class="bg-neutral-50 min-h-screen flex items-center justify-center p-4 sm:p-8 font-sans selection:bg-orange-500 selection:text-white">
+    
+    <!-- Background Decor -->
+    <div class="fixed-decor decor-1"></div>
+    <div class="fixed-decor decor-2"></div>
+
+    <div class="calc-container relative w-full max-w-[400px] overflow-hidden rounded-[3rem] bg-white text-neutral-900 shadow-2xl border border-white">
+        
+        <!-- Status Bar -->
+        <div class="status-bar flex items-center justify-between px-10 pt-10 text-neutral-400">
+            <div class="flex items-center gap-2">
+                <div class="status-indicator"></div>
+                <span class="status-text">Engine v2.1</span>
+            </div>
+            <div class="flex items-center gap-5">
+                <button id="history-toggle" class="icon-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+                </button>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-40"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+        </div>
+
+        <!-- Display -->
+        <div class="display-wrapper relative flex min-h-[180px] flex-col justify-end px-10 pb-6 pt-12 text-right">
+            <div id="expression-display" class="expression-text mb-3 h-6 overflow-x-auto whitespace-nowrap text-sm font-mono text-neutral-300 scrollbar-hide"></div>
+            <div id="main-display" class="main-text overflow-hidden text-5xl font-mono font-medium tracking-tighter text-neutral-900 sm:text-6xl">0</div>
+            <div id="preview-display" class="preview-text mt-3 text-[10px] font-mono text-neutral-300 uppercase tracking-[0.2em] h-4"></div>
+        </div>
+
+        <!-- Visual Separator -->
+        <div class="separator flex items-center gap-3 px-10 py-2">
+            <div class="h-[1px] flex-1 bg-neutral-100"></div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-neutral-200"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>
+            <div class="h-[1px] flex-1 bg-neutral-100"></div>
+        </div>
+
+        <!-- Buttons Grid -->
+        <div class="buttons-grid grid grid-cols-4 gap-4 p-10 pt-6">
+            <button data-action="all-clear" class="btn btn-functional">AC</button>
+            <button data-action="backspace" class="btn btn-functional">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70"><path d="M20 5H9l-7 7 7 7h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Z"/><line x1="18" y1="9" x2="12" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/></svg>
+            </button>
+            <button data-op="/" class="btn btn-functional">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70"><circle cx="12" cy="6" r="1"/><line x1="5" y1="12" x2="19" y2="12"/><circle cx="12" cy="18" r="1"/></svg>
+            </button>
+            <button data-op="*" class="btn btn-operator">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+
+            <button data-num="7" class="btn btn-default">7</button>
+            <button data-num="8" class="btn btn-default">8</button>
+            <button data-num="9" class="btn btn-default">9</button>
+            <button data-op="-" class="btn btn-operator">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+
+            <button data-num="4" class="btn btn-default">4</button>
+            <button data-num="5" class="btn btn-default">5</button>
+            <button data-num="6" class="btn btn-default">6</button>
+            <button data-op="+" class="btn btn-operator">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+
+            <button data-num="1" class="btn btn-default">1</button>
+            <button data-num="2" class="btn btn-default">2</button>
+            <button data-num="3" class="btn btn-default">3</button>
+            <button data-action="calculate" class="btn btn-accent row-span-2 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/></svg>
+            </button>
+
+            <button data-num="0" class="btn btn-default col-span-2">0</button>
+            <button data-action="decimal" class="btn btn-default">.</button>
+        </div>
+
+        <!-- History Panel -->
+        <div id="history-panel" class="absolute inset-0 z-20 flex flex-col bg-white translate-y-full transition-transform">
+            <div class="flex items-center justify-between p-10 pb-4">
+                <h3 class="text-xs font-mono tracking-widest uppercase text-neutral-400">Calculation Log</h3>
+                <button id="history-close" class="icon-btn-close rounded-full p-2 hover:bg-neutral-50 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-neutral-300 hover:text-neutral-900"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+                </button>
+            </div>
+            
+            <div id="history-list" class="flex-1 overflow-y-auto px-10 pb-10 scrollbar-hide">
+                <div class="empty-history flex h-full flex-col items-center justify-center text-neutral-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-4 opacity-10"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+                    <p class="text-[10px] font-mono uppercase tracking-[0.2em] font-medium">Memory is empty</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
